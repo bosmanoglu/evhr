@@ -98,6 +98,7 @@ def main(argv):
     fco_dem = frankotchellappaosmanoglu(dzdx,dzdy) ; #FrankotChellappa removes long wavelength trends
 
     # subtract the recovered dem from the original and estimate a surface of first order.
+    X,Y=np.meshgrid(np.r_[0:dem.shape[1]], np.r_[0:dem.shape[0])
     print('Fit first order polynomial...')
     planefit, fitfunc = fitSurface(X.ravel(), Y.ravel(), (array_dem-fco_dem).ravel())
 
