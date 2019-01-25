@@ -8,6 +8,7 @@ import os
 import argparse
 import numpy as np
 from scipy import optimize
+from pygeotools.lib import iolib
 
 def frankotchellappa(dzdx,dzdy):
     '''frankotchellappa(dzdx,dzdy):
@@ -79,8 +80,10 @@ def parse_args(argv):
 def main(argv):
     args=parse_args(argv)
 
+    #get the masked dem
+    dem = iolib.ds_getma(args.array_dem)
     #get the gradient of the dem
-    dzdy,dzdx = np.gradient(args.array_dem)
+    dzdy,dzdx = np.gradient(dem)
 
     #create copies for modification, and set the masked areas to 0 in the gradients
     dzdx_mod = dzdx.copy();dzdy_mod=dzdy.copy();dzdx_mod[flood_mask_filled!=1]=0;dzdy_mod[flood_mask_filled!=1]=0
