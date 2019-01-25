@@ -69,9 +69,13 @@ def getparser():
     parser.add_argument('array_dem', type=str, help='DEM array')
     return parser
 
-def main():
+def parse_args():
     parser = getparser()
     args = parser.parse_args()
+    return args
+
+def main():
+    args=parse_args(sys.argv[1:])
 
     #get the gradient of the dem
     dzdy,dzdx = np.gradient(args.array_dem)
@@ -93,4 +97,4 @@ def main():
     return dem_interp
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main(sys.argv[1:]))
