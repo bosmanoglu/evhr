@@ -56,7 +56,7 @@ def fitSurface(x,y,z, weight=None, order=1):
         p0 = [0,0.1,0.1,0.1,0.1,0.1]
         fitfunc = lambda p, x, y: p[0]+p[1]*x+p[2]*y+p[3]*x**2+p[4]*y**2+p[5]*x*y
     else:
-        print "order has to be 1 or 2."
+        print("order has to be 1 or 2.")
         return -1
 
     errfunc = lambda p, x, y, z, w: abs(w*(fitfunc(p,x,y) - z))
