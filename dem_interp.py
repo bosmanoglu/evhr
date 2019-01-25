@@ -74,8 +74,8 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def main():
-    args=parse_args(sys.argv[1:])
+def main(argv):
+    args=parse_args(argv)
 
     #get the gradient of the dem
     dzdy,dzdx = np.gradient(args.array_dem)
