@@ -6,6 +6,8 @@
 import sys
 import os
 import argparse
+import numpy as np
+from scipy import optimize
 
 def frankotchellappa(dzdx,dzdy):
     '''frankotchellappa(dzdx,dzdy):
