@@ -30,14 +30,16 @@ def frankotchellappa(dzdx,dzdy):
 def frankotchellappaosmanoglu(dzdx,dzdy):
     '''frankotchellappaosmanoglu(dzdx,dzdy):
     '''
+    print('fc1')
     z = frankotchellappa(dzdx, dzdy)
     #zr = basic.rescale(z,[-1,1])
     g1,g2 = np.gradient(z); #g1=gy, g2=gx
+    print('fc2')
     z2 = frankotchellappa(g2,g1)
     ws = (z.max()-z.min()) / (z2.max()-z2.min())
     #ws = (z.std()) / (z2.std())
     #ws = (6.*z.std()) / (2.)
-
+    print('fc3')
     return frankotchellappa(dzdx*ws,dzdy*ws)
 
 def fitSurface(x,y,z, weight=None, order=1):
@@ -92,12 +94,15 @@ def main(argv):
     
     #not being a modest person to name a function, my routine to get the scale corrected surface back from gradients.
     #Note that this is with the original slopes, I want the result to be close to the original DEM as possible
+    print('Starting first FCO.')
     fco_dem = frankotchellappaosmanoglu(dzdx,dzdy) ; #FrankotChellappa removes long wavelength trends
 
     # subtract the recovered dem from the original and estimate a surface of first order.
+    print('Fit first order polynomial...')
     planefit, fitfunc = fitSurface(X.ravel(), Y.ravel(), (array_dem-fco_dem).ravel())
 
     # add that first order surface to the masked gradient derived dem.
+    print('Starting second FCO')
     dem_interp = frankotchellappaosmanoglu(dzdx_mod,dzdy_mod) + fitfunc(planefit,X,Y)
 
     # Return a numpy masked array
