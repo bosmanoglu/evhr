@@ -81,12 +81,14 @@ def main(argv):
     args=parse_args(argv)
 
     #get the masked dem
-    dem = iolib.ds_getma(args.array_dem)
+    dem = iolib.fn_getma(args.array_dem)
+    mask= np.ma.getmaskarray(dem)
+
     #get the gradient of the dem
     dzdy,dzdx = np.gradient(dem)
-
+    
     #create copies for modification, and set the masked areas to 0 in the gradients
-    dzdx_mod = dzdx.copy();dzdy_mod=dzdy.copy();dzdx_mod[flood_mask_filled!=1]=0;dzdy_mod[flood_mask_filled!=1]=0
+    dzdx_mod = dzdx.copy();dzdy_mod=dzdy.copy();dzdx_mod[mask==True]=0;dzdy_mod[mask==True]=0
     
     #not being a modest person to name a function, my routine to get the scale corrected surface back from gradients.
     #Note that this is with the original slopes, I want the result to be close to the original DEM as possible
