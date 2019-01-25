@@ -69,9 +69,9 @@ def getparser():
     parser.add_argument('array_dem', type=str, help='DEM array')
     return parser
 
-def parse_args():
+def parse_args(argv):
     parser = getparser()
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     return args
 
 def main(argv):
